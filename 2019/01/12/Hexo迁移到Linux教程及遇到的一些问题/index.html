@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Lincso &amp; Blog">
 <meta property="og:description" content="Linux在服务方面的确比windows要容易学明白一些所以最近笔者在美化自己的博客时发现有个文件怎么都删不掉，然后又想给自己的域名弄个https，由于在windwos上操作实在是太过繁琐，索性直接搬家到linux。 Hexo是什么？这里有必要普及一下—–Hexo是一个快速, 简洁且高效的博客框架. 让上百个页面在几秒内瞬间完成渲染. Hexo支持Github Flavored Markdown的">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-14T09:04:35.000Z">
+<meta property="og:updated_time" content="2019-08-10T13:46:29.540Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo迁移至Linux教程及遇到的一些问题">
 <meta name="twitter:description" content="Linux在服务方面的确比windows要容易学明白一些所以最近笔者在美化自己的博客时发现有个文件怎么都删不掉，然后又想给自己的域名弄个https，由于在windwos上操作实在是太过繁琐，索性直接搬家到linux。 Hexo是什么？这里有必要普及一下—–Hexo是一个快速, 简洁且高效的博客框架. 让上百个页面在几秒内瞬间完成渲染. Hexo支持Github Flavored Markdown的">
@@ -54,7 +54,7 @@
 		  <h1 class="header-author"><a href="/">Lincso</a></h1>
 		</hgroup>
 		
-		<p class="header-subtitle">攻击性渗透测试nb</p>
+		<p class="header-subtitle">网络真滴有意思呢！</p>
 		
 
 		<nav class="header-menu">
@@ -121,7 +121,7 @@
 			  <h1 class="header-author js-header-author">Lincso</h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>攻击性渗透测试nb<i class="icon icon-quo-right"></i></p>
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>网络真滴有意思呢！<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -208,7 +208,7 @@
 <p>也可以这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | bash</span><br></pre></td></tr></table></figure></p>
 <p>装好了别急着用我们还要source一下，不然用不了的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure></p>
 <p>有了这个差不多算磨好刀了</p>
-<p>##安装Hexo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install hexo-cli -g</span><br></pre></td></tr></table></figure></p>
+<p>##安装Hexo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure></p>
 <p>成功后开始搭建博客系统<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo init blog（这里的blog是别名---等会生成的文件夹就是这个，你也可以自己取一个）</span><br><span class="line">cd blog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure></p>
 <p>绑定Github<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;&quot;</span><br><span class="line">git config --global user.email &quot;&quot;</span><br></pre></td></tr></table></figure></p>
 <p>将windows原博客中的source theme _config.yml copy进来，如果你+了各种奇奇怪怪的美化文件那也copy进来吧<br>然后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g hexo d</span><br></pre></td></tr></table></figure></p>
@@ -519,19 +519,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">cisco</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">基础网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">云计算</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">cisco</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">基础网络</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -696,5 +696,5 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
 
 </div>
   </div>
-<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/33.2017.newyear.model.json"},"display":{"position":"right","width":100,"height":200,"hOffset":-10,"vOffset":40},"mobile":{"show":false}});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/histoire.model.json"},"display":{"position":"right","width":90,"height":180,"hOffset":-10,"vOffset":40},"mobile":{"show":false}});</script></body>
 </html>
