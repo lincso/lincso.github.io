@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.gif">
+  <link rel="icon" type="image/png" href="/img/icon.gif">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="description" content="Life is from a small mushroom grow strong">
+  <meta name="author" content="Lincso">
+  <meta name="keywords" content="">
+  <title>qr码基础总结 ~ Lincso &amp; Blog</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css">
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css">
+
+
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">&nbsp;<strong>Lincso & Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">文章分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">在?this me</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/default.png')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期四, 二月 13日 2020, 5:15 下午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    1.3k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      5 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p>二维码在日常生活经常用到可对于二维码如何加解密又知道多少呢？</p>
+<h2 id="qrcode的基本结构"><a href="#qrcode的基本结构" class="headerlink" title="qrcode的基本结构"></a>qrcode的基本结构</h2><p><img src="http://tva1.sinaimg.cn/large/0080xEK2ly1gbuypkuuy8j30jr0bzwfl.jpg" srcset="/img/loading.gif" alt=""></p>
+<pre><code>位置探测图形、位置探测图形分隔符、定位图形：定位qrcode的位置
+校正图形：笔者理解为校正图形的数量确定qrcode的规格
+格式信息：qrcode的纠错等级[L|M|Q|H]
+版本信息：qrcode的规格，最低为[21x21]，最高为[177x177]；ps：每个版本的递进模块+4
+数据和纠错码字：实际保存的二维码信息，和纠错码字（用于修正二维码损坏带来的错误）
+</code></pre><h2 id="编码过程"><a href="#编码过程" class="headerlink" title="编码过程"></a>编码过程</h2><p><strong>1. 数据分析：</strong>确定编码的字符类型，按相应的字符集转换成符号字符; 选择纠错等级</p>
+<p><strong>2. 数据编码：</strong>将数据字符转换为位流，每8位一个码字，构成一个数据的码字序列</p>
+<p>​                                                                        <strong>数据类型最大容量</strong></p>
+<p><img src="https://file.moetu.org/images/2020/02/13/1422100-20181017155017768-59167363527fe3b3b18116920.png" srcset="/img/loading.gif" alt=""></p>
+<p>​                                                                            <strong>对应指示符</strong></p>
+<p><img src="https://file.moetu.org/images/2020/02/13/fu776cfc178c39fb8c.png" srcset="/img/loading.gif" alt=""></p>
+<p>​                                                                    <strong>version对应数据长度</strong></p>
+<p><img src="https://file.moetu.org/images/2020/02/13/huan68619b84b5d2e603.jpg" srcset="/img/loading.gif" alt=""></p>
+<h3 id="码字序列是如何组成的？"><a href="#码字序列是如何组成的？" class="headerlink" title="码字序列是如何组成的？"></a>码字序列是如何组成的？</h3><p>例如：1234567</p>
+<p>1.确认一段数据进行分组（数字三位一组，字符两位一组）</p>
+<p>123 456 7</p>
+<p>2.转换成二进制（根据version转换10|12|14位二进制数，剩下不满三位的转4|7位二进制数）</p>
+<pre><code>123--&gt;0001111011
+456--&gt;0111001000
+7--&gt;0111
+</code></pre><p>3.二进制排列成序列</p>
+<pre><code>0001(数字指示标) 0000000111(数据长度7转化的二进制数) 0001111011 0111001000 0111 0000(结束符)
+</code></pre><p><strong>3.纠错编码</strong>：按需要将上面的码字序列分块，并根据纠错等级和分块的码字，产生纠错码字，并把纠错码字加入到数据码字序列后面，成为一个新的序列</p>
+<p><img src="https://file.moetu.org/images/2020/02/13/cuo5d2251c441352806.png" srcset="/img/loading.gif" alt=""></p>
+<p>在二维码规格和纠错等级确定的情况下，其实它所能容纳的码字总数和纠错码字数也就确定了，比如：版本10，纠错等级时H时，总共能容纳346个码字，其中224个纠错码字。就是说二维码区域中大约1/3的码字时冗余的。对于这224个纠错码字，它能够纠正112个替代错误（如黑白颠倒）或者224个据读错误（无法读到或者无法译码），这样纠错容量为：112/346=32.4%。</p>
+<p><strong>4.构造最终数据信息</strong>：在规格确定的条件下，将上面产生的序列按次序放如分块中</p>
+<p> 按规定把数据分块，然后对每一块进行计算，得出相应的纠错码字区块，把纠错码字区块 按顺序构成一个序列，添加到原先的数据码字序列后面。<br>如：D1, D12, D23, D35, D2, D13, D24, D36, … D11, D22, D33, D45, D34, D46, E1, E23,E45, E67, E2, E24, E46, E68，…</p>
+<p><strong>5.构造矩阵</strong>：将探测图形、分隔符、定位图形、校正图形和码字模块放入矩阵中。</p>
+<p><img src="https://file.moetu.org/images/2020/02/13/ju696eb1fc063fabe4.png" srcset="/img/loading.gif" alt=""></p>
+<p><strong>6.掩摸</strong>：将掩摸图形用于符号的编码区域，使得二维码图形中的深色和浅色（黑色和白色）区域能够比率最优的分布。</p>
+<p><strong>7.格式和版本信息</strong>：生成格式和版本信息放入相应区域内。</p>
+<p>版本7-40都包含了版本信息，没有版本信息的全为0。二维码上两个位置包含了版本信息，它们是冗余的。</p>
+<p>版本信息共18位，6X3的矩阵，其中6位时数据为，如版本号8，数据位的信息时 001000，后面的12位是纠错位。</p>
+<h2 id="python的qrcode加解密"><a href="#python的qrcode加解密" class="headerlink" title="python的qrcode加解密"></a>python的qrcode加解密</h2><p><strong>1.qrcode加密</strong></p>
+<pre><code>import qrcode
+import os
+import sys
+import time 
+
+QRImagePath = os.getcwd() + &#39;/qrcode.png&#39;   #临时存储位置
+qr = qrcode.QRCode(         
+    version=1,    
+    error_correction=qrcode.constants.ERROR_CORRECT_L,    
+    box_size=10,    
+    border=2,
+)   #设置图片格式 
+
+data = input()  #运行时输入数据
+qr.add_data(data)
+qr.make(fit=True) 
+
+img = qr.make_image()
+img.save(&#39;qrcode.png&#39;)  #生成图片
+
+if sys.platform.find(&#39;darwin&#39;) &gt;= 0:    
+    os.system(&#39;open %s&#39; % QRImagePath)
+
+elif sys.platform.find(&#39;linux&#39;) &gt;= 0:    
+    os.system(&#39;xdg-open %s&#39; % QRImagePath)
+else:    
+    os.system(&#39;call %s&#39; % QRImagePath) 
+
+time.sleep(5)   #间隔5个单位
+os.remove(QRImagePath)  #删除图片
+</code></pre><p><strong>2.qrcode解码</strong></p>
+<pre><code>import os
+import logging
+from PIL import Image
+import zxing    #导入解析包
+import random
+
+logger = logging.getLogger(__name__)    #记录数据
+
+if not logger.handlers:
+    logging.basicConfig(level = logging.INFO)
+
+DEBUG = (logging.getLevelName(logger.getEffectiveLevel()) == &#39;DEBUG&#39;)   #记录调式过程
+
+# 在当前目录生成临时文件，规避java的路径问题
+def ocr_qrcode_zxing(filename):
+    img = Image.open(filename)
+    ran = int(random.random() * 100000)     #设置随机数据的大小
+    img.save(&#39;%s%s.jpg&#39; % (os.path.basename(filename).split(&#39;.&#39;)[0], ran))
+    zx = zxing.BarCodeReader()      #调用zxing二维码读取包
+    data = &#39;&#39;
+    zxdata = zx.decode(&#39;%s%s.jpg&#39; % (os.path.basename(filename).split(&#39;.&#39;)[0], ran))    #图片解码
+
+# 删除临时文件
+    os.remove(&#39;%s%s.jpg&#39; % (os.path.basename(filename).split(&#39;.&#39;)[0], ran))
+
+    if zxdata:
+        logger.debug(u&#39;zxing识别二维码:%s,内容: %s&#39; % (filename, zxdata))
+        data = zxdata
+    else:
+        logger.error(u&#39;识别zxing二维码出错:%s&#39; % (filename))
+        img.save(&#39;%s-zxing.jpg&#39; % filename)
+    return data     #返回记录的内容
+
+if __name__ == &#39;__main__&#39;:
+    filename = r&#39;G:\TestDemo\venv\二维码解析与生成\1536492016.png&#39;
+    # zxing二维码识别
+    ltext = ocr_qrcode_zxing(filename)  #将图片文件里的信息转码放到ltext里面
+    logger.info(u&#39;[%s]Zxing二维码识别:[%s]!!!&#39; % (filename, ltext))  #记录文本信息
+
+print(ltext)    #打印出二维码名字
+</code></pre>
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/CTF">CTF</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
+
+
+
+    
+  <!-- 备案信息 -->
+  <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">京ICP证null号</a>
+  
+    <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=此处无code# 公安备案的编号，用于URL跳转查询" rel="nofollow noopener" class="police-beian" target="_blank">
+      <span class="police-beian-sep">&nbsp;|&nbsp;</span>
+      
+        <img src="/img/police_beian.png" srcset="/img/loading.gif">
+      
+      <span>京公网安备号我不配拥有</span>
+    </a>
+  
+
+
+
+    <!-- cnzz Analytics icon -->
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/popper/popper.min.js"></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="/js/lazyload.js"></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js"></script>
+  
+  <script src="/js/post.js"></script>
+
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js"></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  <!-- cnzz Analytics -->
+  
+
+
+
+  <script src="/lib/prettify/prettify.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js"></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "qr码基础总结&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js"></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "true",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js"></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js"></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script type="text/javascript">
+      //定义获取词语下标
+      var a_idx = 0;
+      jQuery(document).ready(function ($) {
+        //点击body时触发事件
+        $("body").click(function (e) {
+          //需要显示的词语
+          var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法治", "爱国", "敬业", "诚信", "友善");
+          //设置词语给span标签
+          var $i = $("<span/>").text(a[a_idx]);
+          //下标等于原来下标+1  余 词语总数
+          a_idx = (a_idx + 1) % a.length;
+          //获取鼠标指针的位置，分别相对于文档的左和右边缘。
+          //获取x和y的指针坐标
+          var x = e.pageX, y = e.pageY;
+          //在鼠标的指针的位置给$i定义的span标签添加css样式
+          $i.css({
+            "z-index": 999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": rand_color()
+          });
+          // 随机颜色
+          function rand_color() {
+            return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+          }
+          //在body添加这个标签
+          $("body").append($i);
+          //animate() 方法执行 CSS 属性集的自定义动画。
+          //该方法通过CSS样式将元素从一个状态改变为另一个状态。CSS属性值是逐渐改变的，这样就可以创建动画效果。
+          //详情请看http://www.w3school.com.cn/jquery/effect_animate.asp
+          $i.animate({
+            //将原来的位置向上移动180
+            "top": y - 180,
+            "opacity": 0
+            //1500动画的速度
+          }, 1500, function () {
+            //时间到了自动删除
+            $i.remove();
+          });
+        });
+      })
+      ;
+    </script>
+  
+
+
+
+
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

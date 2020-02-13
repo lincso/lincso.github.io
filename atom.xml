@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://lincso.cn/"/>
-  <updated>2020-02-12T13:50:10.384Z</updated>
+  <updated>2020-02-13T13:12:43.995Z</updated>
   <id>http://lincso.cn/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>qr码基础总结</title>
+    <link href="http://lincso.cn/2020/02/13/qr%E7%A0%81%E5%9F%BA%E7%A1%80%E6%80%BB%E7%BB%93/"/>
+    <id>http://lincso.cn/2020/02/13/qr码基础总结/</id>
+    <published>2020-02-13T09:15:44.000Z</published>
+    <updated>2020-02-13T13:12:43.995Z</updated>
+    
+    <content type="html"><![CDATA[<p>二维码在日常生活经常用到可对于二维码如何加解密又知道多少呢？</p><h2 id="qrcode的基本结构"><a href="#qrcode的基本结构" class="headerlink" title="qrcode的基本结构"></a>qrcode的基本结构</h2><p><img src="http://tva1.sinaimg.cn/large/0080xEK2ly1gbuypkuuy8j30jr0bzwfl.jpg" srcset="/img/loading.gif" alt=""></p><pre><code>位置探测图形、位置探测图形分隔符、定位图形：定位qrcode的位置校正图形：笔者理解为校正图形的数量确定qrcode的规格格式信息：qrcode的纠错等级[L|M|Q|H]版本信息：qrcode的规格，最低为[21x21]，最高为[177x177]；ps：每个版本的递进模块+4数据和纠错码字：实际保存的二维码信息，和纠错码字（用于修正二维码损坏带来的错误）</code></pre><h2 id="编码过程"><a href="#编码过程" class="headerlink" title="编码过程"></a>编码过程</h2><p><strong>1. 数据分析：</strong>确定编码的字符类型，按相应的字符集转换成符号字符; 选择纠错等级</p><p><strong>2. 数据编码：</strong>将数据字符转换为位流，每8位一个码字，构成一个数据的码字序列</p><p>​                                                                        <strong>数据类型最大容量</strong></p><p><img src="https://file.moetu.org/images/2020/02/13/1422100-20181017155017768-59167363527fe3b3b18116920.png" srcset="/img/loading.gif" alt=""></p><p>​                                                                            <strong>对应指示符</strong></p><p><img src="https://file.moetu.org/images/2020/02/13/fu776cfc178c39fb8c.png" srcset="/img/loading.gif" alt=""></p><p>​                                                                    <strong>version对应数据长度</strong></p><p><img src="https://file.moetu.org/images/2020/02/13/huan68619b84b5d2e603.jpg" srcset="/img/loading.gif" alt=""></p><h3 id="码字序列是如何组成的？"><a href="#码字序列是如何组成的？" class="headerlink" title="码字序列是如何组成的？"></a>码字序列是如何组成的？</h3><p>例如：1234567</p><p>1.确认一段数据进行分组（数字三位一组，字符两位一组）</p><p>123 456 7</p><p>2.转换成二进制（根据version转换10|12|14位二进制数，剩下不满三位的转4|7位二进制数）</p><pre><code>123--&gt;0001111011456--&gt;01110010007--&gt;0111</code></pre><p>3.二进制排列成序列</p><pre><code>0001(数字指示标) 0000000111(数据长度7转化的二进制数) 0001111011 0111001000 0111 0000(结束符)</code></pre><p><strong>3.纠错编码</strong>：按需要将上面的码字序列分块，并根据纠错等级和分块的码字，产生纠错码字，并把纠错码字加入到数据码字序列后面，成为一个新的序列</p><p><img src="https://file.moetu.org/images/2020/02/13/cuo5d2251c441352806.png" srcset="/img/loading.gif" alt=""></p><p>在二维码规格和纠错等级确定的情况下，其实它所能容纳的码字总数和纠错码字数也就确定了，比如：版本10，纠错等级时H时，总共能容纳346个码字，其中224个纠错码字。就是说二维码区域中大约1/3的码字时冗余的。对于这224个纠错码字，它能够纠正112个替代错误（如黑白颠倒）或者224个据读错误（无法读到或者无法译码），这样纠错容量为：112/346=32.4%。</p><p><strong>4.构造最终数据信息</strong>：在规格确定的条件下，将上面产生的序列按次序放如分块中</p><p> 按规定把数据分块，然后对每一块进行计算，得出相应的纠错码字区块，把纠错码字区块 按顺序构成一个序列，添加到原先的数据码字序列后面。<br>如：D1, D12, D23, D35, D2, D13, D24, D36, … D11, D22, D33, D45, D34, D46, E1, E23,E45, E67, E2, E24, E46, E68，…</p><p><strong>5.构造矩阵</strong>：将探测图形、分隔符、定位图形、校正图形和码字模块放入矩阵中。</p><p><img src="https://file.moetu.org/images/2020/02/13/ju696eb1fc063fabe4.png" srcset="/img/loading.gif" alt=""></p><p><strong>6.掩摸</strong>：将掩摸图形用于符号的编码区域，使得二维码图形中的深色和浅色（黑色和白色）区域能够比率最优的分布。</p><p><strong>7.格式和版本信息</strong>：生成格式和版本信息放入相应区域内。</p><p>版本7-40都包含了版本信息，没有版本信息的全为0。二维码上两个位置包含了版本信息，它们是冗余的。</p><p>版本信息共18位，6X3的矩阵，其中6位时数据为，如版本号8，数据位的信息时 001000，后面的12位是纠错位。</p><h2 id="python的qrcode加解密"><a href="#python的qrcode加解密" class="headerlink" title="python的qrcode加解密"></a>python的qrcode加解密</h2><p><strong>1.qrcode加密</strong></p><pre><code>import qrcodeimport osimport sysimport time QRImagePath = os.getcwd() + &#39;/qrcode.png&#39;   #临时存储位置qr = qrcode.QRCode(             version=1,        error_correction=qrcode.constants.ERROR_CORRECT_L,        box_size=10,        border=2,)   #设置图片格式 data = input()  #运行时输入数据qr.add_data(data)qr.make(fit=True) img = qr.make_image()img.save(&#39;qrcode.png&#39;)  #生成图片if sys.platform.find(&#39;darwin&#39;) &gt;= 0:        os.system(&#39;open %s&#39; % QRImagePath)elif sys.platform.find(&#39;linux&#39;) &gt;= 0:        os.system(&#39;xdg-open %s&#39; % QRImagePath)else:        os.system(&#39;call %s&#39; % QRImagePath) time.sleep(5)   #间隔5个单位os.remove(QRImagePath)  #删除图片</code></pre><p><strong>2.qrcode解码</strong></p><pre><code>import osimport loggingfrom PIL import Imageimport zxing    #导入解析包import randomlogger = logging.getLogger(__name__)    #记录数据if not logger.handlers:    logging.basicConfig(level = logging.INFO)DEBUG = (logging.getLevelName(logger.getEffectiveLevel()) == &#39;DEBUG&#39;)   #记录调式过程# 在当前目录生成临时文件，规避java的路径问题def ocr_qrcode_zxing(filename):    img = Image.open(filename)    ran = int(random.random() * 100000)     #设置随机数据的大小    img.save(&#39;%s%s.jpg&#39; % (os.path.basename(filename).split(&#39;.&#39;)[0], ran))    zx = zxing.BarCodeReader()      #调用zxing二维码读取包    data = &#39;&#39;    zxdata = zx.decode(&#39;%s%s.jpg&#39; % (os.path.basename(filename).split(&#39;.&#39;)[0], ran))    #图片解码# 删除临时文件    os.remove(&#39;%s%s.jpg&#39; % (os.path.basename(filename).split(&#39;.&#39;)[0], ran))    if zxdata:        logger.debug(u&#39;zxing识别二维码:%s,内容: %s&#39; % (filename, zxdata))        data = zxdata    else:        logger.error(u&#39;识别zxing二维码出错:%s&#39; % (filename))        img.save(&#39;%s-zxing.jpg&#39; % filename)    return data     #返回记录的内容if __name__ == &#39;__main__&#39;:    filename = r&#39;G:\TestDemo\venv\二维码解析与生成\1536492016.png&#39;    # zxing二维码识别    ltext = ocr_qrcode_zxing(filename)  #将图片文件里的信息转码放到ltext里面    logger.info(u&#39;[%s]Zxing二维码识别:[%s]!!!&#39; % (filename, ltext))  #记录文本信息print(ltext)    #打印出二维码名字</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;二维码在日常生活经常用到可对于二维码如何加解密又知道多少呢？&lt;/p&gt;
+&lt;h2 id=&quot;qrcode的基本结构&quot;&gt;&lt;a href=&quot;#qrcode的基本结构&quot; class=&quot;headerlink&quot; title=&quot;qrcode的基本结构&quot;&gt;&lt;/a&gt;qrcode的基本结构&lt;/h2
+      
+    
+    </summary>
+    
+      <category term="CTF" scheme="http://lincso.cn/categories/CTF/"/>
+    
+    
+      <category term="网络安全" scheme="http://lincso.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>WIFI破解</title>
