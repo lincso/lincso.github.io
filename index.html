@@ -132,6 +132,56 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/02/13/压缩文件学习总结/">
+        <p class="h4 index-header">压缩文件学习总结</p>
+        
+        
+          
+        
+        <div class="index-excerpt">
+          <div class="index-text mb-1">最近换了一个hexo主题同时发现原来用的图床加载好像有些问题（不过点击放大还是能直接看到的），之后会使用新的图床。
+RAR文件的组成RAR是有四个文件块组成的，分别是分别是标记块、归档头部块、文件块、结束块，这些块之间没有固定地先后顺序，但要求第一个块必须是标志块并且其后紧跟一个归档头部块
+
+RAR的标记块和结束块都是固定的7字节序列，分别为0×52 61 72 21 1A 07 00和0xC4 3D 7B 00 40 07 00
+每一块后面都有两个crc校验，在crc之后的字节用于判断块类型
+HEAD_TYPE=0x72 标记块
+HEAD_TYPE=0x73 压缩文件头
+HEAD_TYPE=0x74 文件头
+HEAD_TYPE=0x75 注释头
+HEAD_TYPE=0x76 旧风格的用户身份信息
+HEAD_TYPE=0x77 子块
+HEAD_TYPE=0x78 恢复纪录
+HEAD_TYPE=0x79 用户身份信息
+HEAD_TYPE=0x7a subblock
+
+比如上图rar要获取的文件除了flag.txt外还有secret.png，本来在A8 3C校验位后被改成了7A，被锁定后解</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-13&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E9%9A%8F%E7%AC%94">随笔</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/02/13/qr码基础总结/">
         <p class="h4 index-header">qr码基础总结</p>
         
@@ -163,7 +213,7 @@ qrcode的基本结构
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/CTF">CTF</a>&nbsp;
+            <a href="/categories/%E9%9A%8F%E7%AC%94">随笔</a>&nbsp;
           &nbsp;
         
         
@@ -498,46 +548,6 @@ cd xerosploit
           <div class="index-text mb-1">DNS信息收集收集信息前用nslookup或dig查看dns服务器信息（nslookup、dig自行百度）
 dns区域传输(一般查不到)dig @ns1.sina.com sina.com axfr
 host -T -l sina.com ns1.sina.com
-...</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-14&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Kali%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0">Kali学习笔记</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2019/02/14/tcpdump小黑板抓包/">
-        <p class="h4 index-header">tcpdump小黑板抓包笔记</p>
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1"> Linux、Unix默认安装了tcpdump纯字符抓包工具
-抓包tcpdump -i eth0 -s 0 -w file.pcap(将抓包信息保存到file.pcap，从第0位开始---tcpdump默认只抓取前68个字节)
-tcpdump -i eth0 port 22(只抓取端口是22的包)
-tcpdump -r file.pcap(读取file.pcap的信息)
 ...</div>
         </div>
       </a>

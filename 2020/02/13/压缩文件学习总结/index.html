@@ -15,7 +15,7 @@
   <meta name="description" content="Life is from a small mushroom grow strong">
   <meta name="author" content="Lincso">
   <meta name="keywords" content="">
-  <title>归档 ~ Lincso &amp; Blog</title>
+  <title>压缩文件学习总结 ~ Lincso &amp; Blog</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
@@ -36,7 +36,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">&nbsp;<strong>Lincso & Blog</strong>&nbsp;</a>
@@ -105,6 +105,41 @@
             </span>
 
             
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期四, 二月 13日 2020, 9:19 晚上
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    585 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      2 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
           </div>
 
           
@@ -115,35 +150,92 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 17 篇文章</p>
-  <hr>
-  
-    
       
-      <p class="h5">2019</p>
-    
-    <a href="/2019/09/23/扫描器原理讲解/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">扫描器原理讲解</span>
-      <span style="float: right;">09-23</span>
-    </a>
-  
-</div>
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p>最近换了一个hexo主题同时发现原来用的图床加载好像有些问题（不过点击放大还是能直接看到的），之后会使用新的图床。</p>
+<h2 id="RAR文件的组成"><a href="#RAR文件的组成" class="headerlink" title="RAR文件的组成"></a>RAR文件的组成</h2><p>RAR是有四个文件块组成的，分别是分别是标记块、归档头部块、文件块、结束块，这些块之间没有固定地先后顺序，但要求第一个块必须是标志块并且其后紧跟一个归档头部块</p>
+<p><img src="https://file.moetu.org/images/2020/02/13/rarbbd81624ae8af451.jpg" srcset="/img/loading.gif" alt=""></p>
+<p>RAR的标记块和结束块都是固定的7字节序列，分别为0×52 61 72 21 1A 07 00和0xC4 3D 7B 00 40 07 00</p>
+<p>每一块后面都有两个crc校验，在crc之后的字节用于判断块类型</p>
+<pre><code>HEAD_TYPE=0x72 标记块
+HEAD_TYPE=0x73 压缩文件头
+HEAD_TYPE=0x74 文件头
+HEAD_TYPE=0x75 注释头
+HEAD_TYPE=0x76 旧风格的用户身份信息
+HEAD_TYPE=0x77 子块
+HEAD_TYPE=0x78 恢复纪录
+HEAD_TYPE=0x79 用户身份信息
+HEAD_TYPE=0x7a subblock
+</code></pre><p><img src="https://file.moetu.org/images/2020/02/13/rare37ad6ff47f4b200.png" srcset="/img/loading.gif" alt=""></p>
+<p>比如上图rar要获取的文件除了flag.txt外还有secret.png，本来在A8 3C校验位后被改成了7A，被锁定后解压文件无法看到secret.png，所以这里需要自己改块标志将其改为文件块</p>
+<h2 id="ZIP文件的组成"><a href="#ZIP文件的组成" class="headerlink" title="ZIP文件的组成"></a>ZIP文件的组成</h2><p>压缩源文件数据区+压缩源文件目录区+压缩源文件目录结束标志</p>
+<p><img src="https://file.moetu.org/images/2020/02/13/zip158813ef018345b7.png" srcset="/img/loading.gif" alt=""></p>
+<p>50 4B 03 04是ZIP头文件标记</p>
+<p>14 03是解压文件需要的PK版本</p>
+<p>00 00是全局方位标记（文件是否有加密可通过这两位来判断，单数为加密，偶数为无，例如：00 02 04表示加密，01 03 09表示无）</p>
+<p>之后查看压缩包里有多少文件可以查找50 4B有多少个就行了</p>
+<p>不过压缩源文件数据区跟压缩源文件目录区是不一样的，文件标识依然是前四位，之后四位分别对应压缩需要的PK版本跟解压需要的PK版本之后的00 00对应数据区的全局方位标记（判断加解密与上面一样）</p>
+<p>在CTF题中会存在伪加密的zip文件，原理就是更改了其中的全局方位标记</p>
+<p>ps：Kali中用binwalk -e可以直接解压，此工具分离文件的原理就是识别文件头后进行文件分离</p>
 
-              </div>
-            </div>
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/%E9%9A%8F%E7%AC%94">随笔</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -232,6 +324,11 @@
 
 
 
+  
+    <script src="/lib/tocbot/tocbot.min.js"></script>
+  
+  <script src="/js/post.js"></script>
+
 
 
   <script src="/lib/smooth-scroll/smooth-scroll.min.js"></script>
@@ -272,7 +369,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "压缩文件学习总结&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
