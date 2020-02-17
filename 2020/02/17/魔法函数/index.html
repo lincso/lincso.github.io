@@ -15,7 +15,7 @@
   <meta name="description" content="Life is from a small mushroom grow strong">
   <meta name="author" content="Lincso">
   <meta name="keywords" content="">
-  <title>归档 ~ Lincso &amp; Blog</title>
+  <title>PHP魔法函数 ~ Lincso &amp; Blog</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
@@ -36,7 +36,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">&nbsp;<strong>Lincso & Blog</strong>&nbsp;</a>
@@ -105,6 +105,41 @@
             </span>
 
             
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期一, 二月 17日 2020, 5:05 下午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    525 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      2 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
           </div>
 
           
@@ -115,104 +150,95 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p>魔法函数是什么神仙玩意？<br>对于一个编程从出门到劝退的网络安全爱好者来说看代码是件很苦逼的事（很多函数都需要baidu一下）.</p>
+<h1 id="invoke"><a href="#invoke" class="headerlink" title="_invoke()"></a>_invoke()</h1><p>这个其实很简单只是当对象名当函数来用时，调用_invoke()。</p>
+<pre><code>class Test{
+function __invoke()
+{
+var_dump(&quot;当显示这段话时，是把对象当做方法来用&quot;);
+}
+}
+$test = new Test();//实例化一个对象
+$test();//将对象当做方法来使用
+</code></pre><p>引用一下其他博主写的代码，很清楚的表明了test被实例化后将自己作为函数，它所含值就是_dump。</p>
+<h1 id="sleep-wakeup"><a href="#sleep-wakeup" class="headerlink" title="_sleep() _wakeup()"></a>_sleep() _wakeup()</h1><p>这里的函数是本文的关键。<br>_sleep()：在对象序列化（serialize()）后php就是调用这个函数，此函数可以清除对象现有的值并且返回对象中所有变量名称的数组，而没有返回任何数据。null会被序列化发生E_NOTICE的错误<br>_wakeup()：在对象反序列化（unserialize()）时被调用，它用于重新建立数据库连接，或初始化操作提前准备对象数据。</p>
+<pre><code>class xctf{
+public $flag=&#39;111&#39;;
+public function _wakeup(){
+exit(&#39;bad requests&#39;);
+}
+?code=
+}
+</code></pre><p>对于这道题，第一点可以看出在网页后面加上?code=以及后面的值flag才会出现<br>题目中看_wakeup()说明当对象反序列化后我们得到的只会是bad requests，这里要绕过。<br>查看大佬的提示：将序列化字符串中代表变量个数的数字大于其真实值的数字，以及变量的属性与真实属性不一样时时会绕过_wakeup()。</p>
+<p>所以。。。</p>
+<pre><code>class xctf{
+public $flag=&#39;111&#39;;
+}
+$a =new xctf();
+echo(serialize($a));
+</code></pre><p>在线进行php编程，将题目中的xctf中值进行序列化<br>得到的序列化数组：O:4:”xctf”:1:{s:4:”flag”;s:3:”111”;}<br>将这里得到的数组改一下就好了<br>payload:O:4:”xctf”:2:{s:4:”flag”;s:3:”111”;} | O:4:”xctf”:1:{s:4:”flag”;i:3:”111”;}</p>
+<p>ps:o表示对象，a表示数组，s表示字符，i表示数字其后数字表示个数</p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
                 
-
-<div class="list-group">
-  <p class="h4">共计 18 篇文章</p>
-  <hr>
-  
-    
-      
-      <p class="h5">2020</p>
-    
-    <a href="/2020/02/17/魔法函数/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">PHP魔法函数</span>
-      <span style="float: right;">02-17</span>
-    </a>
-  
-    
-    <a href="/2020/02/13/压缩文件学习总结/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">压缩文件学习总结</span>
-      <span style="float: right;">02-13</span>
-    </a>
-  
-    
-    <a href="/2020/02/13/qr码基础总结/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">qr码基础总结</span>
-      <span style="float: right;">02-13</span>
-    </a>
-  
-    
-      
-      <p class="h5">2019</p>
-    
-    <a href="/2019/11/11/2019-11-11-WIFI破解/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">WIFI破解</span>
-      <span style="float: right;">11-11</span>
-    </a>
-  
-    
-    <a href="/2019/11/10/靶机渗透/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">靶机渗透</span>
-      <span style="float: right;">11-10</span>
-    </a>
-  
-    
-    <a href="/2019/09/23/扫描器原理讲解/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">扫描器原理讲解</span>
-      <span style="float: right;">09-23</span>
-    </a>
-  
-    
-    <a href="/2019/06/22/CISCO网络设备基本配置/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">CISCO网络设备基本配置</span>
-      <span style="float: right;">06-22</span>
-    </a>
-  
-    
-    <a href="/2019/03/14/Docker使用/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Docker使用</span>
-      <span style="float: right;">03-14</span>
-    </a>
-  
-    
-    <a href="/2019/03/10/docker-cgroup运维/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">docker+cgroup运维</span>
-      <span style="float: right;">03-10</span>
-    </a>
-  
-    
-    <a href="/2019/02/25/xerosploit框架使用/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">xerosploit框架使用</span>
-      <span style="float: right;">02-25</span>
-    </a>
-  
-</div>
-
-  <nav aria-label="index posts navigation">
-    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fas fa-angle-double-right"></i></a>
-    </span>
-  </nav>
-  
-  <script>
-    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
-      ele.href += '#board';
-    }
-  </script>
-
-
-              </div>
-            </div>
+                  <a class="hover-with-bg" href="/categories/%E9%9A%8F%E7%AC%94">随笔</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -301,6 +327,11 @@
 
 
 
+  
+    <script src="/lib/tocbot/tocbot.min.js"></script>
+  
+  <script src="/js/post.js"></script>
+
 
 
   <script src="/lib/smooth-scroll/smooth-scroll.min.js"></script>
@@ -341,7 +372,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "PHP魔法函数&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

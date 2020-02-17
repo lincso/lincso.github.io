@@ -132,6 +132,54 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/02/17/魔法函数/">
+        <p class="h4 index-header">PHP魔法函数</p>
+        
+        
+          
+        
+        <div class="index-excerpt">
+          <div class="index-text mb-1">魔法函数是什么神仙玩意？对于一个编程从出门到劝退的网络安全爱好者来说看代码是件很苦逼的事（很多函数都需要baidu一下）.
+_invoke()这个其实很简单只是当对象名当函数来用时，调用_invoke()。
+class Test{
+function __invoke()
+{
+var_dump(&quot;当显示这段话时，是把对象当做方法来用&quot;);
+}
+}
+$test = new Test();//实例化一个对象
+$test();//将对象当做方法来使用
+引用一下其他博主写的代码，很清楚的表明了test被实例化后将自己作为函数，它所含值就是_dump。
+_sleep() _wakeup()这里的函数是本文的关键。_sleep()：在对象序列化（serialize()）后php就是调用这个函数，此函数可以清除对象现有的值并且返回对象中所有变量名称的数组，而没有返回任何数据。null会被序列化发生E_NOTICE的错误_wakeup()：在对象反序列化（unserialize()）时被调用，它用于重新建立数据库连接，或初始化操作提前准备对象数据。
+class xctf{
+publi</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-17&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E9%9A%8F%E7%AC%94">随笔</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/02/13/压缩文件学习总结/">
         <p class="h4 index-header">压缩文件学习总结</p>
         
@@ -516,45 +564,6 @@ cd xerosploit
       <div>
         
           <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-25&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Kali%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0">Kali学习笔记</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2019/02/14/信息收集-主DNS/">
-        <p class="h4 index-header">信息收集</p>
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">DNS信息收集收集信息前用nslookup或dig查看dns服务器信息（nslookup、dig自行百度）
-dns区域传输(一般查不到)dig @ns1.sina.com sina.com axfr
-host -T -l sina.com ns1.sina.com
-...</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-14&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>

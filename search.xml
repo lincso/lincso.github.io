@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>PHP魔法函数</title>
+      <link href="/2020/02/17/%E9%AD%94%E6%B3%95%E5%87%BD%E6%95%B0/"/>
+      <url>/2020/02/17/%E9%AD%94%E6%B3%95%E5%87%BD%E6%95%B0/</url>
+      
+        <content type="html"><![CDATA[<p>魔法函数是什么神仙玩意？<br>对于一个编程从出门到劝退的网络安全爱好者来说看代码是件很苦逼的事（很多函数都需要baidu一下）.</p><h1 id="invoke"><a href="#invoke" class="headerlink" title="_invoke()"></a>_invoke()</h1><p>这个其实很简单只是当对象名当函数来用时，调用_invoke()。</p><pre><code>class Test{function __invoke(){var_dump(&quot;当显示这段话时，是把对象当做方法来用&quot;);}}$test = new Test();//实例化一个对象$test();//将对象当做方法来使用</code></pre><p>引用一下其他博主写的代码，很清楚的表明了test被实例化后将自己作为函数，它所含值就是_dump。</p><h1 id="sleep-wakeup"><a href="#sleep-wakeup" class="headerlink" title="_sleep() _wakeup()"></a>_sleep() _wakeup()</h1><p>这里的函数是本文的关键。<br>_sleep()：在对象序列化（serialize()）后php就是调用这个函数，此函数可以清除对象现有的值并且返回对象中所有变量名称的数组，而没有返回任何数据。null会被序列化发生E_NOTICE的错误<br>_wakeup()：在对象反序列化（unserialize()）时被调用，它用于重新建立数据库连接，或初始化操作提前准备对象数据。</p><pre><code>class xctf{public $flag=&#39;111&#39;;public function _wakeup(){exit(&#39;bad requests&#39;);}?code=}</code></pre><p>对于这道题，第一点可以看出在网页后面加上?code=以及后面的值flag才会出现<br>题目中看_wakeup()说明当对象反序列化后我们得到的只会是bad requests，这里要绕过。<br>查看大佬的提示：将序列化字符串中代表变量个数的数字大于其真实值的数字，以及变量的属性与真实属性不一样时时会绕过_wakeup()。</p><p>所以。。。</p><pre><code>class xctf{public $flag=&#39;111&#39;;}$a =new xctf();echo(serialize($a));</code></pre><p>在线进行php编程，将题目中的xctf中值进行序列化<br>得到的序列化数组：O:4:”xctf”:1:{s:4:”flag”;s:3:”111”;}<br>将这里得到的数组改一下就好了<br>payload:O:4:”xctf”:2:{s:4:”flag”;s:3:”111”;} | O:4:”xctf”:1:{s:4:”flag”;i:3:”111”;}</p><p>ps:o表示对象，a表示数组，s表示字符，i表示数字其后数字表示个数</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 随笔 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 网络安全 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>压缩文件学习总结</title>
       <link href="/2020/02/13/%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
       <url>/2020/02/13/%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</url>

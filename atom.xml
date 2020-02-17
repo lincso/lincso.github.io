@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://lincso.cn/"/>
-  <updated>2020-02-13T15:00:58.993Z</updated>
+  <updated>2020-02-17T10:35:48.995Z</updated>
   <id>http://lincso.cn/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>PHP魔法函数</title>
+    <link href="http://lincso.cn/2020/02/17/%E9%AD%94%E6%B3%95%E5%87%BD%E6%95%B0/"/>
+    <id>http://lincso.cn/2020/02/17/魔法函数/</id>
+    <published>2020-02-17T09:05:32.000Z</published>
+    <updated>2020-02-17T10:35:48.995Z</updated>
+    
+    <content type="html"><![CDATA[<p>魔法函数是什么神仙玩意？<br>对于一个编程从出门到劝退的网络安全爱好者来说看代码是件很苦逼的事（很多函数都需要baidu一下）.</p><h1 id="invoke"><a href="#invoke" class="headerlink" title="_invoke()"></a>_invoke()</h1><p>这个其实很简单只是当对象名当函数来用时，调用_invoke()。</p><pre><code>class Test{function __invoke(){var_dump(&quot;当显示这段话时，是把对象当做方法来用&quot;);}}$test = new Test();//实例化一个对象$test();//将对象当做方法来使用</code></pre><p>引用一下其他博主写的代码，很清楚的表明了test被实例化后将自己作为函数，它所含值就是_dump。</p><h1 id="sleep-wakeup"><a href="#sleep-wakeup" class="headerlink" title="_sleep() _wakeup()"></a>_sleep() _wakeup()</h1><p>这里的函数是本文的关键。<br>_sleep()：在对象序列化（serialize()）后php就是调用这个函数，此函数可以清除对象现有的值并且返回对象中所有变量名称的数组，而没有返回任何数据。null会被序列化发生E_NOTICE的错误<br>_wakeup()：在对象反序列化（unserialize()）时被调用，它用于重新建立数据库连接，或初始化操作提前准备对象数据。</p><pre><code>class xctf{public $flag=&#39;111&#39;;public function _wakeup(){exit(&#39;bad requests&#39;);}?code=}</code></pre><p>对于这道题，第一点可以看出在网页后面加上?code=以及后面的值flag才会出现<br>题目中看_wakeup()说明当对象反序列化后我们得到的只会是bad requests，这里要绕过。<br>查看大佬的提示：将序列化字符串中代表变量个数的数字大于其真实值的数字，以及变量的属性与真实属性不一样时时会绕过_wakeup()。</p><p>所以。。。</p><pre><code>class xctf{public $flag=&#39;111&#39;;}$a =new xctf();echo(serialize($a));</code></pre><p>在线进行php编程，将题目中的xctf中值进行序列化<br>得到的序列化数组：O:4:”xctf”:1:{s:4:”flag”;s:3:”111”;}<br>将这里得到的数组改一下就好了<br>payload:O:4:”xctf”:2:{s:4:”flag”;s:3:”111”;} | O:4:”xctf”:1:{s:4:”flag”;i:3:”111”;}</p><p>ps:o表示对象，a表示数组，s表示字符，i表示数字其后数字表示个数</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;魔法函数是什么神仙玩意？&lt;br&gt;对于一个编程从出门到劝退的网络安全爱好者来说看代码是件很苦逼的事（很多函数都需要baidu一下）.&lt;/p&gt;
+&lt;h1 id=&quot;invoke&quot;&gt;&lt;a href=&quot;#invoke&quot; class=&quot;headerlink&quot; title=&quot;_invoke
+      
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://lincso.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="网络安全" scheme="http://lincso.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
+  
+  <entry>
     <title>压缩文件学习总结</title>
     <link href="http://lincso.cn/2020/02/13/%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
     <id>http://lincso.cn/2020/02/13/压缩文件学习总结/</id>
     <published>2020-02-13T13:19:27.000Z</published>
-    <updated>2020-02-13T15:00:58.993Z</updated>
+    <updated>2020-02-13T15:02:02.459Z</updated>
     
     <content type="html"><![CDATA[<p>最近换了一个hexo主题同时发现原来用的图床加载好像有些问题（不过点击放大还是能直接看到的），之后会使用新的图床。</p><h2 id="RAR文件的组成"><a href="#RAR文件的组成" class="headerlink" title="RAR文件的组成"></a>RAR文件的组成</h2><p>RAR是有四个文件块组成的，分别是分别是标记块、归档头部块、文件块、结束块，这些块之间没有固定地先后顺序，但要求第一个块必须是标志块并且其后紧跟一个归档头部块</p><p><img src="https://file.moetu.org/images/2020/02/13/rarbbd81624ae8af451.jpg" srcset="/img/loading.gif" alt=""></p><p>RAR的标记块和结束块都是固定的7字节序列，分别为0×52 61 72 21 1A 07 00和0xC4 3D 7B 00 40 07 00</p><p>每一块后面都有两个crc校验，在crc之后的字节用于判断块类型</p><pre><code>HEAD_TYPE=0x72 标记块HEAD_TYPE=0x73 压缩文件头HEAD_TYPE=0x74 文件头HEAD_TYPE=0x75 注释头HEAD_TYPE=0x76 旧风格的用户身份信息HEAD_TYPE=0x77 子块HEAD_TYPE=0x78 恢复纪录HEAD_TYPE=0x79 用户身份信息HEAD_TYPE=0x7a subblock</code></pre><p><img src="https://file.moetu.org/images/2020/02/13/rare37ad6ff47f4b200.png" srcset="/img/loading.gif" alt=""></p><p>比如上图rar要获取的文件除了flag.txt外还有secret.png，本来在A8 3C校验位后被改成了7A，被锁定后解压文件无法看到secret.png，所以这里需要自己改块标志将其改为文件块</p><h2 id="ZIP文件的组成"><a href="#ZIP文件的组成" class="headerlink" title="ZIP文件的组成"></a>ZIP文件的组成</h2><p>压缩源文件数据区+压缩源文件目录区+压缩源文件目录结束标志</p><p><img src="https://file.moetu.org/images/2020/02/13/zip158813ef018345b7.png" srcset="/img/loading.gif" alt=""></p><p>50 4B 03 04是ZIP头文件标记</p><p>14 03是解压文件需要的PK版本</p><p>00 00是全局方位标记（文件是否有加密可通过这两位来判断，单数为加密，偶数为无，例如：00 02 04表示加密，01 03 09表示无）</p><p>之后查看压缩包里有多少文件可以查找50 4B有多少个就行了</p><p>不过压缩源文件数据区跟压缩源文件目录区是不一样的，文件标识依然是前四位，之后四位分别对应压缩需要的PK版本跟解压需要的PK版本之后的00 00对应数据区的全局方位标记（判断加解密与上面一样）</p><p>在CTF题中会存在伪加密的zip文件，原理就是更改了其中的全局方位标记</p><p>ps：Kali中用binwalk -e可以直接解压，此工具分离文件的原理就是识别文件头后进行文件分离</p>]]></content>
     
