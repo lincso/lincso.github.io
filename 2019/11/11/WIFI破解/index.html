@@ -15,7 +15,7 @@
   <meta name="description" content="Life is from a small mushroom grow strong">
   <meta name="author" content="Lincso">
   <meta name="keywords" content="">
-  <title>归档 ~ Lincso &amp; Blog</title>
+  <title>WIFI破解 ~ Lincso &amp; Blog</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
@@ -36,7 +36,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">&nbsp;<strong>Lincso & Blog</strong>&nbsp;</a>
@@ -105,6 +105,41 @@
             </span>
 
             
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期一, 十一月 11日 2019, 2:15 下午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    1k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      3 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
           </div>
 
           
@@ -115,59 +150,108 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 19 篇文章</p>
-  <hr>
-  
-    
       
-      <p class="h5">2019</p>
-    
-    <a href="/2019/02/06/VPS-SS组建个人的科学上网服务器/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">VPS+SS组建个人的科学上网服务器</span>
-      <span style="float: right;">02-06</span>
-    </a>
-  
-    
-    <a href="/2019/01/12/Hexo迁移到Linux教程及遇到的一些问题/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Hexo迁移至Linux教程及遇到的一些问题</span>
-      <span style="float: right;">01-12</span>
-    </a>
-  
-    
-    <a href="/2019/01/06/Windows-Kali双系统安装教程/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Windows-Kali双系统安装教程</span>
-      <span style="float: right;">01-06</span>
-    </a>
-  
-</div>
 
-  <nav aria-label="index posts navigation">
-    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <a class="extend prev" rel="prev" href="/archives/2019/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/archives/2019/">1</a><span class="page-number current">2</span>
-    </span>
-  </nav>
-  
-  <script>
-    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
-      ele.href += '#board';
-    }
-  </script>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p>关于wifi破解的小技巧</p>
+<h2 id="WPA四次握手"><a href="#WPA四次握手" class="headerlink" title="WPA四次握手"></a>WPA四次握手</h2><p>WPA 握手过程是基于802.1X 协议，使用eapol key进行封装传输,建立通信一共需要五个步骤.</p>
+<p>AP初始化：<br>使用 SSID 和passphares作为入参，通过哈希算法产生PSK。在WPA-PSK 中PSK=PMK=pdkdf2_SHA1(passphrase, SSID, SSID length, 4096)</p>
+<p>第一次握手：<br>AP广播SSID，AP_MAC(AA)；<br>STATION 端使用接收到的SSID，AP_MAC和passphares使用同样算法产生PSK。</p>
+<p>第二次握手<br>STATION 发送一个随机数SNonce，STATION_MAC(SA)给AP；<br>AP端接收到SNonce、STATION_MAC(SA)后产生一个随机数ANonce，然后用 PMK、AP_MAC(AA)、STATION_MAC(SA)、SNonce、ANonce 用以下SHA1_PRF算法产生PTK，提取这个 PTK 前16 个字节组成一个MIC KEY。<br>PTK=SHA1_PRF(PMK, Len(PMK), “Pairwise key expansion”, MIN(AA, SA) || Max(AA, SA) || Min(ANonce, SNonce) || Max(ANonce, SNonce))</p>
+ <a id="more"></a>
+<p>第三次握手：<br>AP发送上面产生的ANonce给STATION<br>STATION 端用接收到ANonce 和以前产生PMK、SNonce、AP_MAC(AA)、STATION_MAC(SA)用同样的算法产生PTK。提取这个PTK 前16 个字节组成一个MIC KEY使用以下算法产生MIC值用这个MIC KEY 和一个802.1X数据帧使用以下算法得到MIC值<br>MIC = HMAC_MD5(MIC Key，16，802.1X data)</p>
+<p>第四次握手：<br>STATION 发送802.1X 数据帧，MIC给AP；STATION 端用上面那个准备好的802.1X 数据帧在最后填充上MIC值和两个字节的0（十六进制）然后发送这个数据帧到AP。<br>AP端收到这个数据帧后提取这个MIC。并把这个数据帧的MIC部分都填上0（十六进制）这时用这个802.1X数据帧，和用上面AP产生的 MIC KEY 使用同样的算法得出MIC’。如果MIC’等于STATION 发送过来的MIC。那么第四次握手成功。若不等说明则AP 和 STATION 的密钥不相同，握手失败了。</p>
+<p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8ug10331qj30jd0fgjt2.jpg" srcset="/img/loading.gif" alt="img"></p>
+<h3 id="破解原理"><a href="#破解原理" class="headerlink" title="破解原理"></a>破解原理</h3><p>用我们字典中的Passphrase+SSID先生成PMK，然后结合握手包中的STA_MAC、AP_MAC、ANONCE、SNONCE计算PTK，再加上原始的报文数据算出MIC并与AP发送的MIC比较，如果一致，那么该PSK就是密钥。</p>
+<h2 id="Aircrack-ng破解"><a href="#Aircrack-ng破解" class="headerlink" title="Aircrack-ng破解"></a>Aircrack-ng破解</h2><h4 id="查找网卡"><a href="#查找网卡" class="headerlink" title="查找网卡"></a>查找网卡</h4><pre><code>iwconfig
+</code></pre><h4 id="关闭影响网卡监听的功能"><a href="#关闭影响网卡监听的功能" class="headerlink" title="关闭影响网卡监听的功能"></a>关闭影响网卡监听的功能</h4><pre><code>service network-manager stopairmon-ng check kill
+</code></pre><h4 id="开启网卡监听模式"><a href="#开启网卡监听模式" class="headerlink" title="开启网卡监听模式"></a>开启网卡监听模式</h4><pre><code>airmon-ng start wlan0
+</code></pre><p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8uyrch1kkj30g00g576t.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p>这里网卡名已经变成wlan0mon了</p>
+<h4 id="抓wifi数据包"><a href="#抓wifi数据包" class="headerlink" title="抓wifi数据包"></a>抓wifi数据包</h4><pre><code>airodump-ng wlan0mon
+</code></pre><p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8uyuspz14j30g00g5tco.jpg" srcset="/img/loading.gif" alt="img"></p>
+<h4 id="对目标wifi进行deauth"><a href="#对目标wifi进行deauth" class="headerlink" title="对目标wifi进行deauth"></a>对目标wifi进行deauth</h4><p>当洪水攻击执行后,目标wifi所有设备会停止连接,当有设备重新连接后会抓取设备的握手包</p>
+<pre><code>airodump-ng wlan0mon --bssid 58:C8:76:2C:85:50 -c 5 -w wpa2-c代表频道, 后面带的是频道bssid: mac地址(物理地址)-w代表目录(抓到的握手包放在这个目录下面)
+</code></pre><p>如果之前探测包的第一个shell没有出现handshacke,可以进行断网攻击</p>
+<pre><code>aireplay-ng -0 0 -a 58:C8:76:2C:85:50 wlan0mon
+</code></pre><p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8uzgnqojoj30ix0g50z6.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p>这里已经有握手包了就断开攻击,毕竟人家一直连不上网也会怀疑出啥问题了</p>
+<h4 id="字典爆破密码"><a href="#字典爆破密码" class="headerlink" title="字典爆破密码"></a>字典爆破密码</h4><pre><code>aircrack-ng -w /usr/share/wordlists/rockyou.txt wpa2-01.cap
+</code></pre><p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8uznelo0jj30g00g5n14.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p>成功后这里就会出现密码,我这里就不出成功后的状态了</p>
+<h4 id="推荐一个工具fluxion"><a href="#推荐一个工具fluxion" class="headerlink" title="推荐一个工具fluxion"></a><strong>推荐一个工具fluxion</strong></h4><p>比airmon-ng要方便,上面命令要是不想记用这个方便</p>
+<p><a href="https://github.com/deltaxflux/fluxion" target="_blank" rel="noopener">github下载地址</a></p>
+<p>进入目录下执行./fluxion.sh </p>
+<p>进入工具后选择语言,是有中文的,我这里进入的英文下的</p>
+<p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8uzwb6ei2j30ix0g5jwd.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p>选择1扫描所有信道.</p>
+<p>这时会出现这个小白板,当里面有你想要攻击的wifi后ctrl-c停止扫描</p>
+<p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8uzybdlgjj30ix0g5wjc.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p>这里再选择你自己要攻击的</p>
+<h4 id="建立虚假AP"><a href="#建立虚假AP" class="headerlink" title="建立虚假AP"></a>建立虚假AP</h4><p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8v0089bsqj30ix0g5afw.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p>选择1,然后再按enter最后再选择aircrack-ng (Miss chance)进行抓包—–懒得截图</p>
+<h4 id="洪水攻击"><a href="#洪水攻击" class="headerlink" title="洪水攻击"></a>洪水攻击</h4><p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8v02u1te4j30ix0g5q7k.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p>选择1,之后会有两个窗口,当有设备连进来后选择抓取到的握手包,我这里不演示了</p>
+<p><img src="http://tva1.sinaimg.cn/large/007X8olVly1g8v05e1b2tj30ix0g50y0.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p>选择握手包后选择web interface,伪造一个假web登录界面(这里所有人都连不上wifi了),当有人输入wifi密码后fluxion脚本结束工作,密码现在你的电脑里了…</p>
 
-
-              </div>
-            </div>
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Kali%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0">Kali学习笔记</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -256,6 +340,11 @@
 
 
 
+  
+    <script src="/lib/tocbot/tocbot.min.js"></script>
+  
+  <script src="/js/post.js"></script>
+
 
 
   <script src="/lib/smooth-scroll/smooth-scroll.min.js"></script>
@@ -296,7 +385,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "WIFI破解&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

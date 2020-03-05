@@ -15,7 +15,7 @@
   <meta name="description" content="Life is from a small mushroom grow strong">
   <meta name="author" content="Lincso">
   <meta name="keywords" content="">
-  <title>归档 ~ Lincso &amp; Blog</title>
+  <title>汇编基本笔记 ~ Lincso &amp; Blog</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
@@ -36,7 +36,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">&nbsp;<strong>Lincso & Blog</strong>&nbsp;</a>
@@ -105,6 +105,41 @@
             </span>
 
             
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期四, 三月 5日 2020, 9:31 上午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    599 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      2 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
           </div>
 
           
@@ -115,59 +150,136 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 19 篇文章</p>
-  <hr>
-  
-    
       
-      <p class="h5">2019</p>
-    
-    <a href="/2019/02/06/VPS-SS组建个人的科学上网服务器/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">VPS+SS组建个人的科学上网服务器</span>
-      <span style="float: right;">02-06</span>
-    </a>
-  
-    
-    <a href="/2019/01/12/Hexo迁移到Linux教程及遇到的一些问题/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Hexo迁移至Linux教程及遇到的一些问题</span>
-      <span style="float: right;">01-12</span>
-    </a>
-  
-    
-    <a href="/2019/01/06/Windows-Kali双系统安装教程/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Windows-Kali双系统安装教程</span>
-      <span style="float: right;">01-06</span>
-    </a>
-  
-</div>
 
-  <nav aria-label="index posts navigation">
-    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <a class="extend prev" rel="prev" href="/archives/2019/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/archives/2019/">1</a><span class="page-number current">2</span>
-    </span>
-  </nav>
-  
-  <script>
-    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
-      ele.href += '#board';
-    }
-  </script>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h2 id="汇编语言基本格式"><a href="#汇编语言基本格式" class="headerlink" title="汇编语言基本格式"></a>汇编语言基本格式</h2><p>汇编语言与机器语言是一对一的，而高级语言与机器语言是一对多的</p>
+<pre><code>int Y;
+int X = ( Y + 4 ) * 3;
+</code></pre><pre><code>mov eax,Y  ;Y 送入 EAX 寄存器
+add eax,4  ;EAX 寄存器内容加 4
+mov ebx,3  ;3 送入 EBX 寄存器
+imul ebx   ;EAX 与 EBX 相乘
+mov x,eax  ;EAX 的值送入 X
+</code></pre><p>寄存器是cpu中被命名的存储位置，用于保存操作的中间结果</p>
+<h3 id="二进制转十进制（加权位计数法）"><a href="#二进制转十进制（加权位计数法）" class="headerlink" title="二进制转十进制（加权位计数法）"></a>二进制转十进制（加权位计数法）</h3><p>$$<br>dec = ( Dn-1 x 2n-1 ) + ( Dn-2 x 2n-2 ) +…+ ( D1 x 21 )+ ( D0 x 20 )<br>$$</p>
+<p>D表示二进制的数字（0，1）<br><strong>列：00001001=( 1 X 23 ) + ( 1 X 20 ) = 9</strong></p>
+<h3 id="十六进制转十进制"><a href="#十六进制转十进制" class="headerlink" title="十六进制转十进制"></a>十六进制转十进制</h3><p>$$<br>dec = (Dn-1 X 16n-1)+ (Dn-2 x 16n-2)+…+ (D1 X 161)+ (D0 x 160)<br>$$</p>
+<p><strong>列：3BA4=(3 x 163)+(11 x 162)+(10 x 161)+( 4  x  160)=15268</strong></p>
+<h4 id="二进制相加"><a href="#二进制相加" class="headerlink" title="二进制相加"></a>二进制相加</h4><table>
+<thead>
+<tr>
+<th>0+0=0</th>
+<th>0+1=1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1+0=1</td>
+<td>1+1=10</td>
+</tr>
+</tbody>
+</table>
+<p><strong>列：00101001+01011010=10000011</strong></p>
+<h3 id="字节的度量单位"><a href="#字节的度量单位" class="headerlink" title="字节的度量单位"></a>字节的度量单位</h3><pre><code>1 千字节（kilobyte）等于 210，或 1024 个字节。
+1 兆字节（megabyte）（1MB）等于 220，或 1 048 576 字节。
+1 吉字节（gigabyte）（1GB）等于 230 即 10243，或 1 073 741 824 字节。
+1 太字节（terabyte）（1TB）等于 240，即 10244，或 1 099 511 627 776 字节。
+1 拍字节（petabyte）等于 250，或 1 125 899 906 842 624 字节。
+1 艾字节（exabyte）等于 260，或 1 152 921 504 606 846 976 字节。
+1 泽字节（zettabyte）等于 270 个字节。
+1 尧字节（yottabyte）等于 280 个字节。
+</code></pre><h2 id="补码的应用及运算方式"><a href="#补码的应用及运算方式" class="headerlink" title="补码的应用及运算方式"></a>补码的应用及运算方式</h2><p><strong>一个数的补码是其加法逆元</strong></p>
+<blockquote>
+<p><strong>1011001010011100</strong><br><strong>msb为高位</strong><br><strong>lsb为低位</strong><br><strong>最高位为1表示负为0表示正</strong></p>
+</blockquote>
+<h3 id="二进制补码计算："><a href="#二进制补码计算：" class="headerlink" title="二进制补码计算："></a>二进制补码计算：</h3><pre><code>00000001取反=11111110 +1=11111111(补码)
+逆元方式-1 11111111-1=11111110取反=00000001
+</code></pre><h3 id="16进制补码计算："><a href="#16进制补码计算：" class="headerlink" title="16进制补码计算："></a>16进制补码计算：</h3><pre><code>6A3D取反（每位数减15）=95C2 +1=95C3
+逆元方式95C3取反加1=6A3C+1=6A3D
+</code></pre><h3 id="有符号的二进制数转化十进制"><a href="#有符号的二进制数转化十进制" class="headerlink" title="有符号的二进制数转化十进制"></a>有符号的二进制数转化十进制</h3><p>最高位是1该数是补码，所以进行求补得正数然后转化十进制再加上符号</p>
+<pre><code>11111000 取反=00000111 +1=00001000=8 为负=-8
+</code></pre><p>-8的二进制表示就是将8的二进制数进行取反+1</p>
+<pre><code>00001000 取反=11110111 +1=11111000（上一步相反的过程）
+</code></pre><h2 id="汇编boolean表达式（与或非）"><a href="#汇编boolean表达式（与或非）" class="headerlink" title="汇编boolean表达式（与或非）"></a>汇编boolean表达式（与或非）</h2><pre><code>非（NOT）：标记为 ¬ 或 ~ 或 &#39;
+与（AND）：标记为^或 ·
+或（OR）：标记为 ∨ 或 +
+</code></pre><table>
+<thead>
+<tr>
+<th>¬X=NOT X</th>
+<th>¬X∨Y=(NOT X) OR Y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X^Y=X AND Y</td>
+<td>¬(X^Y)=NOT (X AND Y)</td>
+</tr>
+<tr>
+<td>X∨Y=X OR Y</td>
+<td>X^¬Y=X AND (NOT Y)</td>
+</tr>
+</tbody>
+</table>
 
-
-              </div>
-            </div>
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/%E9%9A%8F%E7%AC%94">随笔</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/ctf">ctf</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -256,6 +368,11 @@
 
 
 
+  
+    <script src="/lib/tocbot/tocbot.min.js"></script>
+  
+  <script src="/js/post.js"></script>
+
 
 
   <script src="/lib/smooth-scroll/smooth-scroll.min.js"></script>
@@ -296,7 +413,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "汇编基本笔记&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

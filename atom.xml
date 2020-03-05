@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://lincso.cn/"/>
-  <updated>2020-02-17T10:35:48.995Z</updated>
+  <updated>2020-03-05T01:47:08.126Z</updated>
   <id>http://lincso.cn/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>汇编基本笔记</title>
+    <link href="http://lincso.cn/2020/03/05/%E6%B1%87%E7%BC%96%E5%9F%BA%E6%9C%AC%E7%AC%94%E8%AE%B0/"/>
+    <id>http://lincso.cn/2020/03/05/汇编基本笔记/</id>
+    <published>2020-03-05T01:31:53.000Z</published>
+    <updated>2020-03-05T01:47:08.126Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="汇编语言基本格式"><a href="#汇编语言基本格式" class="headerlink" title="汇编语言基本格式"></a>汇编语言基本格式</h2><p>汇编语言与机器语言是一对一的，而高级语言与机器语言是一对多的</p><pre><code>int Y;int X = ( Y + 4 ) * 3;</code></pre><pre><code>mov eax,Y  ;Y 送入 EAX 寄存器add eax,4  ;EAX 寄存器内容加 4mov ebx,3  ;3 送入 EBX 寄存器imul ebx   ;EAX 与 EBX 相乘mov x,eax  ;EAX 的值送入 X</code></pre><p>寄存器是cpu中被命名的存储位置，用于保存操作的中间结果</p><h3 id="二进制转十进制（加权位计数法）"><a href="#二进制转十进制（加权位计数法）" class="headerlink" title="二进制转十进制（加权位计数法）"></a>二进制转十进制（加权位计数法）</h3><p>$$<br>dec = ( Dn-1 x 2n-1 ) + ( Dn-2 x 2n-2 ) +…+ ( D1 x 21 )+ ( D0 x 20 )<br>$$</p><p>D表示二进制的数字（0，1）<br><strong>列：00001001=( 1 X 23 ) + ( 1 X 20 ) = 9</strong></p><h3 id="十六进制转十进制"><a href="#十六进制转十进制" class="headerlink" title="十六进制转十进制"></a>十六进制转十进制</h3><p>$$<br>dec = (Dn-1 X 16n-1)+ (Dn-2 x 16n-2)+…+ (D1 X 161)+ (D0 x 160)<br>$$</p><p><strong>列：3BA4=(3 x 163)+(11 x 162)+(10 x 161)+( 4  x  160)=15268</strong></p><h4 id="二进制相加"><a href="#二进制相加" class="headerlink" title="二进制相加"></a>二进制相加</h4><table><thead><tr><th>0+0=0</th><th>0+1=1</th></tr></thead><tbody><tr><td>1+0=1</td><td>1+1=10</td></tr></tbody></table><p><strong>列：00101001+01011010=10000011</strong></p><h3 id="字节的度量单位"><a href="#字节的度量单位" class="headerlink" title="字节的度量单位"></a>字节的度量单位</h3><pre><code>1 千字节（kilobyte）等于 210，或 1024 个字节。1 兆字节（megabyte）（1MB）等于 220，或 1 048 576 字节。1 吉字节（gigabyte）（1GB）等于 230 即 10243，或 1 073 741 824 字节。1 太字节（terabyte）（1TB）等于 240，即 10244，或 1 099 511 627 776 字节。1 拍字节（petabyte）等于 250，或 1 125 899 906 842 624 字节。1 艾字节（exabyte）等于 260，或 1 152 921 504 606 846 976 字节。1 泽字节（zettabyte）等于 270 个字节。1 尧字节（yottabyte）等于 280 个字节。</code></pre><h2 id="补码的应用及运算方式"><a href="#补码的应用及运算方式" class="headerlink" title="补码的应用及运算方式"></a>补码的应用及运算方式</h2><p><strong>一个数的补码是其加法逆元</strong></p><blockquote><p><strong>1011001010011100</strong><br><strong>msb为高位</strong><br><strong>lsb为低位</strong><br><strong>最高位为1表示负为0表示正</strong></p></blockquote><h3 id="二进制补码计算："><a href="#二进制补码计算：" class="headerlink" title="二进制补码计算："></a>二进制补码计算：</h3><pre><code>00000001取反=11111110 +1=11111111(补码)逆元方式-1 11111111-1=11111110取反=00000001</code></pre><h3 id="16进制补码计算："><a href="#16进制补码计算：" class="headerlink" title="16进制补码计算："></a>16进制补码计算：</h3><pre><code>6A3D取反（每位数减15）=95C2 +1=95C3逆元方式95C3取反加1=6A3C+1=6A3D</code></pre><h3 id="有符号的二进制数转化十进制"><a href="#有符号的二进制数转化十进制" class="headerlink" title="有符号的二进制数转化十进制"></a>有符号的二进制数转化十进制</h3><p>最高位是1该数是补码，所以进行求补得正数然后转化十进制再加上符号</p><pre><code>11111000 取反=00000111 +1=00001000=8 为负=-8</code></pre><p>-8的二进制表示就是将8的二进制数进行取反+1</p><pre><code>00001000 取反=11110111 +1=11111000（上一步相反的过程）</code></pre><h2 id="汇编boolean表达式（与或非）"><a href="#汇编boolean表达式（与或非）" class="headerlink" title="汇编boolean表达式（与或非）"></a>汇编boolean表达式（与或非）</h2><pre><code>非（NOT）：标记为 ¬ 或 ~ 或 &#39;与（AND）：标记为^或 ·或（OR）：标记为 ∨ 或 +</code></pre><table><thead><tr><th>¬X=NOT X</th><th>¬X∨Y=(NOT X) OR Y</th></tr></thead><tbody><tr><td>X^Y=X AND Y</td><td>¬(X^Y)=NOT (X AND Y)</td></tr><tr><td>X∨Y=X OR Y</td><td>X^¬Y=X AND (NOT Y)</td></tr></tbody></table>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;汇编语言基本格式&quot;&gt;&lt;a href=&quot;#汇编语言基本格式&quot; class=&quot;headerlink&quot; title=&quot;汇编语言基本格式&quot;&gt;&lt;/a&gt;汇编语言基本格式&lt;/h2&gt;&lt;p&gt;汇编语言与机器语言是一对一的，而高级语言与机器语言是一对多的&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+      
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://lincso.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="ctf" scheme="http://lincso.cn/tags/ctf/"/>
+    
+  </entry>
+  
+  <entry>
     <title>PHP魔法函数</title>
     <link href="http://lincso.cn/2020/02/17/%E9%AD%94%E6%B3%95%E5%87%BD%E6%95%B0/"/>
     <id>http://lincso.cn/2020/02/17/魔法函数/</id>
     <published>2020-02-17T09:05:32.000Z</published>
-    <updated>2020-02-17T10:35:48.995Z</updated>
+    <updated>2020-03-05T01:32:58.921Z</updated>
     
     <content type="html"><![CDATA[<p>魔法函数是什么神仙玩意？<br>对于一个编程从出门到劝退的网络安全爱好者来说看代码是件很苦逼的事（很多函数都需要baidu一下）.</p><h1 id="invoke"><a href="#invoke" class="headerlink" title="_invoke()"></a>_invoke()</h1><p>这个其实很简单只是当对象名当函数来用时，调用_invoke()。</p><pre><code>class Test{function __invoke(){var_dump(&quot;当显示这段话时，是把对象当做方法来用&quot;);}}$test = new Test();//实例化一个对象$test();//将对象当做方法来使用</code></pre><p>引用一下其他博主写的代码，很清楚的表明了test被实例化后将自己作为函数，它所含值就是_dump。</p><h1 id="sleep-wakeup"><a href="#sleep-wakeup" class="headerlink" title="_sleep() _wakeup()"></a>_sleep() _wakeup()</h1><p>这里的函数是本文的关键。<br>_sleep()：在对象序列化（serialize()）后php就是调用这个函数，此函数可以清除对象现有的值并且返回对象中所有变量名称的数组，而没有返回任何数据。null会被序列化发生E_NOTICE的错误<br>_wakeup()：在对象反序列化（unserialize()）时被调用，它用于重新建立数据库连接，或初始化操作提前准备对象数据。</p><pre><code>class xctf{public $flag=&#39;111&#39;;public function _wakeup(){exit(&#39;bad requests&#39;);}?code=}</code></pre><p>对于这道题，第一点可以看出在网页后面加上?code=以及后面的值flag才会出现<br>题目中看_wakeup()说明当对象反序列化后我们得到的只会是bad requests，这里要绕过。<br>查看大佬的提示：将序列化字符串中代表变量个数的数字大于其真实值的数字，以及变量的属性与真实属性不一样时时会绕过_wakeup()。</p><p>所以。。。</p><pre><code>class xctf{public $flag=&#39;111&#39;;}$a =new xctf();echo(serialize($a));</code></pre><p>在线进行php编程，将题目中的xctf中值进行序列化<br>得到的序列化数组：O:4:”xctf”:1:{s:4:”flag”;s:3:”111”;}<br>将这里得到的数组改一下就好了<br>payload:O:4:”xctf”:2:{s:4:”flag”;s:3:”111”;} | O:4:”xctf”:1:{s:4:”flag”;i:3:”111”;}</p><p>ps:o表示对象，a表示数组，s表示字符，i表示数字其后数字表示个数</p>]]></content>
     
@@ -38,7 +64,7 @@
       <category term="随笔" scheme="http://lincso.cn/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="网络安全" scheme="http://lincso.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+      <category term="ctf" scheme="http://lincso.cn/tags/ctf/"/>
     
   </entry>
   
@@ -47,7 +73,7 @@
     <link href="http://lincso.cn/2020/02/13/%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"/>
     <id>http://lincso.cn/2020/02/13/压缩文件学习总结/</id>
     <published>2020-02-13T13:19:27.000Z</published>
-    <updated>2020-02-13T15:02:02.459Z</updated>
+    <updated>2020-03-05T01:34:09.957Z</updated>
     
     <content type="html"><![CDATA[<p>最近换了一个hexo主题同时发现原来用的图床加载好像有些问题（不过点击放大还是能直接看到的），之后会使用新的图床。</p><h2 id="RAR文件的组成"><a href="#RAR文件的组成" class="headerlink" title="RAR文件的组成"></a>RAR文件的组成</h2><p>RAR是有四个文件块组成的，分别是分别是标记块、归档头部块、文件块、结束块，这些块之间没有固定地先后顺序，但要求第一个块必须是标志块并且其后紧跟一个归档头部块</p><p><img src="https://file.moetu.org/images/2020/02/13/rarbbd81624ae8af451.jpg" srcset="/img/loading.gif" alt=""></p><p>RAR的标记块和结束块都是固定的7字节序列，分别为0×52 61 72 21 1A 07 00和0xC4 3D 7B 00 40 07 00</p><p>每一块后面都有两个crc校验，在crc之后的字节用于判断块类型</p><pre><code>HEAD_TYPE=0x72 标记块HEAD_TYPE=0x73 压缩文件头HEAD_TYPE=0x74 文件头HEAD_TYPE=0x75 注释头HEAD_TYPE=0x76 旧风格的用户身份信息HEAD_TYPE=0x77 子块HEAD_TYPE=0x78 恢复纪录HEAD_TYPE=0x79 用户身份信息HEAD_TYPE=0x7a subblock</code></pre><p><img src="https://file.moetu.org/images/2020/02/13/rare37ad6ff47f4b200.png" srcset="/img/loading.gif" alt=""></p><p>比如上图rar要获取的文件除了flag.txt外还有secret.png，本来在A8 3C校验位后被改成了7A，被锁定后解压文件无法看到secret.png，所以这里需要自己改块标志将其改为文件块</p><h2 id="ZIP文件的组成"><a href="#ZIP文件的组成" class="headerlink" title="ZIP文件的组成"></a>ZIP文件的组成</h2><p>压缩源文件数据区+压缩源文件目录区+压缩源文件目录结束标志</p><p><img src="https://file.moetu.org/images/2020/02/13/zip158813ef018345b7.png" srcset="/img/loading.gif" alt=""></p><p>50 4B 03 04是ZIP头文件标记</p><p>14 03是解压文件需要的PK版本</p><p>00 00是全局方位标记（文件是否有加密可通过这两位来判断，单数为加密，偶数为无，例如：00 02 04表示加密，01 03 09表示无）</p><p>之后查看压缩包里有多少文件可以查找50 4B有多少个就行了</p><p>不过压缩源文件数据区跟压缩源文件目录区是不一样的，文件标识依然是前四位，之后四位分别对应压缩需要的PK版本跟解压需要的PK版本之后的00 00对应数据区的全局方位标记（判断加解密与上面一样）</p><p>在CTF题中会存在伪加密的zip文件，原理就是更改了其中的全局方位标记</p><p>ps：Kali中用binwalk -e可以直接解压，此工具分离文件的原理就是识别文件头后进行文件分离</p>]]></content>
     
@@ -64,7 +90,7 @@
       <category term="随笔" scheme="http://lincso.cn/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="网络安全" scheme="http://lincso.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+      <category term="ctf" scheme="http://lincso.cn/tags/ctf/"/>
     
   </entry>
   
@@ -73,7 +99,7 @@
     <link href="http://lincso.cn/2020/02/13/qr%E7%A0%81%E5%9F%BA%E7%A1%80%E6%80%BB%E7%BB%93/"/>
     <id>http://lincso.cn/2020/02/13/qr码基础总结/</id>
     <published>2020-02-13T09:15:44.000Z</published>
-    <updated>2020-02-13T13:24:54.606Z</updated>
+    <updated>2020-03-05T01:33:30.203Z</updated>
     
     <content type="html"><![CDATA[<p>二维码在日常生活经常用到可对于二维码如何加解密又知道多少呢？</p><h2 id="qrcode的基本结构"><a href="#qrcode的基本结构" class="headerlink" title="qrcode的基本结构"></a>qrcode的基本结构</h2><p><img src="http://tva1.sinaimg.cn/large/0080xEK2ly1gbuypkuuy8j30jr0bzwfl.jpg" srcset="/img/loading.gif" alt=""></p><pre><code>位置探测图形、位置探测图形分隔符、定位图形：定位qrcode的位置校正图形：笔者理解为校正图形的数量确定qrcode的规格格式信息：qrcode的纠错等级[L|M|Q|H]版本信息：qrcode的规格，最低为[21x21]，最高为[177x177]；ps：每个版本的递进模块+4数据和纠错码字：实际保存的二维码信息，和纠错码字（用于修正二维码损坏带来的错误）</code></pre><h2 id="编码过程"><a href="#编码过程" class="headerlink" title="编码过程"></a>编码过程</h2><p><strong>1. 数据分析：</strong>确定编码的字符类型，按相应的字符集转换成符号字符; 选择纠错等级</p><p><strong>2. 数据编码：</strong>将数据字符转换为位流，每8位一个码字，构成一个数据的码字序列</p><p>​                                                                        <strong>数据类型最大容量</strong></p><p><img src="https://file.moetu.org/images/2020/02/13/1422100-20181017155017768-59167363527fe3b3b18116920.png" srcset="/img/loading.gif" alt=""></p><p>​                                                                            <strong>对应指示符</strong></p><p><img src="https://file.moetu.org/images/2020/02/13/fu776cfc178c39fb8c.png" srcset="/img/loading.gif" alt=""></p><p>​                                                                    <strong>version对应数据长度</strong></p><p><img src="https://file.moetu.org/images/2020/02/13/huan68619b84b5d2e603.jpg" srcset="/img/loading.gif" alt=""></p><h3 id="码字序列是如何组成的？"><a href="#码字序列是如何组成的？" class="headerlink" title="码字序列是如何组成的？"></a>码字序列是如何组成的？</h3><p>例如：1234567</p><p>1.确认一段数据进行分组（数字三位一组，字符两位一组）</p><p>123 456 7</p><p>2.转换成二进制（根据version转换10|12|14位二进制数，剩下不满三位的转4|7位二进制数）</p><pre><code>123--&gt;0001111011456--&gt;01110010007--&gt;0111</code></pre><p>3.二进制排列成序列</p><pre><code>0001(数字指示标) 0000000111(数据长度7转化的二进制数) 0001111011 0111001000 0111 0000(结束符)</code></pre><p><strong>3.纠错编码</strong>：按需要将上面的码字序列分块，并根据纠错等级和分块的码字，产生纠错码字，并把纠错码字加入到数据码字序列后面，成为一个新的序列</p><p><img src="https://file.moetu.org/images/2020/02/13/cuo5d2251c441352806.png" srcset="/img/loading.gif" alt=""></p><p>在二维码规格和纠错等级确定的情况下，其实它所能容纳的码字总数和纠错码字数也就确定了，比如：版本10，纠错等级时H时，总共能容纳346个码字，其中224个纠错码字。就是说二维码区域中大约1/3的码字时冗余的。对于这224个纠错码字，它能够纠正112个替代错误（如黑白颠倒）或者224个据读错误（无法读到或者无法译码），这样纠错容量为：112/346=32.4%。</p><p><strong>4.构造最终数据信息</strong>：在规格确定的条件下，将上面产生的序列按次序放如分块中</p><p> 按规定把数据分块，然后对每一块进行计算，得出相应的纠错码字区块，把纠错码字区块 按顺序构成一个序列，添加到原先的数据码字序列后面。<br>如：D1, D12, D23, D35, D2, D13, D24, D36, … D11, D22, D33, D45, D34, D46, E1, E23,E45, E67, E2, E24, E46, E68，…</p><p><strong>5.构造矩阵</strong>：将探测图形、分隔符、定位图形、校正图形和码字模块放入矩阵中。</p><p><img src="https://file.moetu.org/images/2020/02/13/ju696eb1fc063fabe4.png" srcset="/img/loading.gif" alt=""></p><p><strong>6.掩摸</strong>：将掩摸图形用于符号的编码区域，使得二维码图形中的深色和浅色（黑色和白色）区域能够比率最优的分布。</p><p><strong>7.格式和版本信息</strong>：生成格式和版本信息放入相应区域内。</p><p>版本7-40都包含了版本信息，没有版本信息的全为0。二维码上两个位置包含了版本信息，它们是冗余的。<br>版本信息共18位，6X3的矩阵，其中6位时数据为，如版本号8，数据位的信息时 001000，后面的12位是纠错位。</p><h2 id="python的qrcode加解密"><a href="#python的qrcode加解密" class="headerlink" title="python的qrcode加解密"></a>python的qrcode加解密</h2><p><strong>1.qrcode加密</strong></p><pre><code>import qrcodeimport osimport sysimport time QRImagePath = os.getcwd() + &#39;/qrcode.png&#39;   #临时存储位置qr = qrcode.QRCode(             version=1,        error_correction=qrcode.constants.ERROR_CORRECT_L,        box_size=10,        border=2,)   #设置图片格式 data = input()  #运行时输入数据qr.add_data(data)qr.make(fit=True) img = qr.make_image()img.save(&#39;qrcode.png&#39;)  #生成图片if sys.platform.find(&#39;darwin&#39;) &gt;= 0:        os.system(&#39;open %s&#39; % QRImagePath)elif sys.platform.find(&#39;linux&#39;) &gt;= 0:        os.system(&#39;xdg-open %s&#39; % QRImagePath)else:        os.system(&#39;call %s&#39; % QRImagePath) time.sleep(5)   #间隔5个单位os.remove(QRImagePath)  #删除图片</code></pre><p><strong>2.qrcode解码</strong></p><pre><code>import osimport loggingfrom PIL import Imageimport zxing    #导入解析包import randomlogger = logging.getLogger(__name__)    #记录数据if not logger.handlers:    logging.basicConfig(level = logging.INFO)DEBUG = (logging.getLevelName(logger.getEffectiveLevel()) == &#39;DEBUG&#39;)   #记录调式过程# 在当前目录生成临时文件，规避java的路径问题def ocr_qrcode_zxing(filename):    img = Image.open(filename)    ran = int(random.random() * 100000)     #设置随机数据的大小    img.save(&#39;%s%s.jpg&#39; % (os.path.basename(filename).split(&#39;.&#39;)[0], ran))    zx = zxing.BarCodeReader()      #调用zxing二维码读取包    data = &#39;&#39;    zxdata = zx.decode(&#39;%s%s.jpg&#39; % (os.path.basename(filename).split(&#39;.&#39;)[0], ran))    #图片解码# 删除临时文件    os.remove(&#39;%s%s.jpg&#39; % (os.path.basename(filename).split(&#39;.&#39;)[0], ran))    if zxdata:        logger.debug(u&#39;zxing识别二维码:%s,内容: %s&#39; % (filename, zxdata))        data = zxdata    else:        logger.error(u&#39;识别zxing二维码出错:%s&#39; % (filename))        img.save(&#39;%s-zxing.jpg&#39; % filename)    return data     #返回记录的内容if __name__ == &#39;__main__&#39;:    filename = r&#39;G:\TestDemo\venv\二维码解析与生成\1536492016.png&#39;    # zxing二维码识别    ltext = ocr_qrcode_zxing(filename)  #将图片文件里的信息转码放到ltext里面    logger.info(u&#39;[%s]Zxing二维码识别:[%s]!!!&#39; % (filename, ltext))  #记录文本信息print(ltext)    #打印出二维码名字</code></pre>]]></content>
     
@@ -90,14 +116,14 @@
       <category term="随笔" scheme="http://lincso.cn/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="网络安全" scheme="http://lincso.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+      <category term="ctf" scheme="http://lincso.cn/tags/ctf/"/>
     
   </entry>
   
   <entry>
     <title>WIFI破解</title>
-    <link href="http://lincso.cn/2019/11/11/2019-11-11-WIFI%E7%A0%B4%E8%A7%A3/"/>
-    <id>http://lincso.cn/2019/11/11/2019-11-11-WIFI破解/</id>
+    <link href="http://lincso.cn/2019/11/11/WIFI%E7%A0%B4%E8%A7%A3/"/>
+    <id>http://lincso.cn/2019/11/11/WIFI破解/</id>
     <published>2019-11-11T06:15:23.000Z</published>
     <updated>2020-02-12T13:50:10.384Z</updated>
     
